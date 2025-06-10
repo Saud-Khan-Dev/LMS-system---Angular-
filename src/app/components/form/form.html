@@ -1,0 +1,85 @@
+<h1 class="text-2xl font-bold mb-4 text-center">Form Works!</h1>
+
+<p class="text-gray-700 mb-4">{{ message }}</p>
+
+
+<form [formGroup]="form" class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
+
+  <label class="block mb-4">
+    <span class="block text-sm font-medium text-gray-700">Name</span>
+    <input
+      type="text"
+      placeholder="Enter your name"
+      formControlName="name"
+      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+    />
+    @if (name?.hasError('required')) {
+      <span class="text-red-600 text-sm">Name is required</span>
+    }
+  </label>
+
+
+  <label class="block mb-4">
+    <span class="block text-sm font-medium text-gray-700">Father Name</span>
+    <input
+      type="text"
+      placeholder="Enter your father's name"
+      formControlName="fatherName"
+      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+    />
+    @if (fatherName?.hasError('required')) {
+      <span class="text-red-600 text-sm">Father name is required</span>
+    }
+  </label>
+
+
+  <label class="block mb-4">
+    <span class="block text-sm font-medium text-gray-700">Document Name</span>
+    <input
+      type="text"
+      placeholder="Enter your Document name"
+      formControlName="documentName"
+      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+    />
+    @if (documentName?.hasError('required')) {
+      <span class="text-red-600 text-sm">Document name is required</span>
+    }
+  </label>
+
+
+  <label class="block mb-4">
+    <span class="block text-sm font-medium text-gray-700">Completed Date</span>
+    <input
+      type="date"
+      formControlName="completedDate"
+      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+    />
+    @if (completedDate?.hasError('required')) {
+      <span class="text-red-600 text-sm">Completion date is required</span>
+    }
+  </label>
+
+  <label class="block mb-4">
+    <span class="block text-sm font-medium text-gray-700">Upload Document</span>
+    <input
+      type="file"
+      (change)="onDocumentUpload($event)"
+      class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-md file:bg-gray-100 hover:file:bg-gray-200"
+    />
+    @if (loading) {
+       <span class="text-green-600 text-sm">Checking data with the document</span>
+    }
+  </label>
+
+
+  <button
+    type="button"
+    (click)="onSubmitForm()"
+    [disabled]="!isFormCheckedWithDocument"
+    class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+  >
+    Submit
+  </button>
+</form>
+git config --global user.email "you@example.com"
+  git config --global user.name "Your Name
