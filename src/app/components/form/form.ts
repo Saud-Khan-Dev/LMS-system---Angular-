@@ -63,6 +63,7 @@ export class Form {
       })
       .catch(() => {
         this.message = 'Error occured during performing OCR';
+        this.loading = false;
       });
   }
 
