@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   FormControl,
   ReactiveFormsModule,
@@ -13,30 +13,39 @@ import Tesseract from 'tesseract.js';
   templateUrl: './form.html',
 })
 export class Form {
-  isFormCheckedWithDocument = false;
+  @Input() formTitle!: string;
+  @Input() tag1?: string;
+  @Input() tag2?: string;
+  @Input() tag3?: string;
+  @Input() tag4?: string | Date;
 
+
+
+  isFormCheckedWithDocument = false;
   form = new FormGroup({
-    name: new FormControl<string>('', [Validators.required]),
-    fatherName: new FormControl<string>('', [Validators.required]),
-    documentName: new FormControl<string>('', [Validators.required]),
-    completedDate: new FormControl<string>('', [Validators.required]),
+    tag1Value: new FormControl<string>('', [Validators.required]),
+    tag2Value: new FormControl<string>('', [Validators.required]),
+    tag3Value: new FormControl<string>('', [Validators.required]),
+    tag4Value: new FormControl<string>('', [Validators.required]),
   });
 
-  message = '';
+  successMessage = '';
+  errorMessage = '';
+
   loading = false;
 
-  get name() {
-    return this.form.get('name');
+  get tag1Value() {
+    return this.form.get('tag1Value');
   }
-  get fatherName() {
-    return this.form.get('fatherName');
+  get tag2Value() {
+    return this.form.get('tag2Value');
   }
-  get documentName() {
-    return this.form.get('documentName');
+  get tag3Value() {
+    return this.form.get('tag3Value');
   }
 
-  get completedDate() {
-    return this.form.get('completedDate');
+  get tag4Value() {
+    return this.form.get('tag4Value');
   }
 
   onDocumentUpload(event: any) {
@@ -45,10 +54,19 @@ export class Form {
     if (file) {
       const read = new FileReader();
       this.loading = true;
+      this.errorMessage = '';
       read.onload = () => {
-        const fileData = read.result as string;
+        try {
+          const fileData = read.result as string;
 
-        this.performOCR(fileData);
+          this.performOCR(fileData);
+        } catch {
+          this.errorMessage = 'Error reading file:';
+          this.loading = false;
+        }
+      };
+      read.onerror = () => {
+        this.errorMessage = 'Error reading file:';
       };
       read.readAsDataURL(file);
     }
@@ -62,7 +80,7 @@ export class Form {
         this.loading = false;
       })
       .catch(() => {
-        this.message = 'Error occured during performing OCR';
+        this.errorMessage = 'Error occured during performing OCR';
         this.loading = false;
       });
   }
@@ -70,9 +88,12 @@ export class Form {
   searchTags(text: string) {
     if (this.checkingInputFields(text)) {
       this.isFormCheckedWithDocument = true;
-      this.message = 'c';
+      this.successMessage = 'Document verified successfully!';
+      this.errorMessage = '';
     } else {
-      this.message = 'Entered Data is not matched with the provided document';
+      this.errorMessage =
+        'Entered Data is not matched with the provided document';
+      this.successMessage = '';
     }
   }
 
@@ -82,19 +103,19 @@ export class Form {
 
   checkingInputFields(text: string): boolean {
     return (
-      text.toLowerCase().includes(this.name?.value?.toLowerCase() as string) &&
+      text.toLowerCase().includes(this.tag1Value?.value?.toLowerCase() as string) &&
       text
         .toLowerCase()
-        .includes(this.fatherName?.value?.toLowerCase() as string) &&
+        .includes(this.tag2Value?.value?.toLowerCase() as string) &&
       text
         .toLowerCase()
-        .includes(this.documentName?.value?.toLowerCase() as string) &&
+        .includes(this.tag3Value?.value?.toLowerCase() as string) &&
       this.checkingDate(text)
     );
   }
 
   checkingDate(text: string): boolean {
-    const dateFormateStr = this.completedDate?.value;
+    const dateFormateStr = this.tag4Value?.value;
     if (!dateFormateStr) return false;
     const dateFormate = new Date(dateFormateStr);
     const dd = String(dateFormate.getDate()).padStart(2, '0');
