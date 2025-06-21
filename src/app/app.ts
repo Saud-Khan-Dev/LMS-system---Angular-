@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Form } from "./components/form/form";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [Form],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
 })
 export class App {

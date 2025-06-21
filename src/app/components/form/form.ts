@@ -19,8 +19,6 @@ export class Form {
   @Input() tag3?: string;
   @Input() tag4?: string | Date;
 
-
-
   isFormCheckedWithDocument = false;
   form = new FormGroup({
     tag1Value: new FormControl<string>('', [Validators.required]),
@@ -103,7 +101,9 @@ export class Form {
 
   checkingInputFields(text: string): boolean {
     return (
-      text.toLowerCase().includes(this.tag1Value?.value?.toLowerCase() as string) &&
+      text
+        .toLowerCase()
+        .includes(this.tag1Value?.value?.toLowerCase() as string) &&
       text
         .toLowerCase()
         .includes(this.tag2Value?.value?.toLowerCase() as string) &&
@@ -135,5 +135,7 @@ export class Form {
     });
   }
 
-  onSubmitForm() {}
+  onSubmitForm() {
+    
+  }
 }
