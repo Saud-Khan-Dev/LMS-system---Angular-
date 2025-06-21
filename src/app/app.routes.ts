@@ -10,7 +10,6 @@ import { OrganizationChart } from './pages/about/organization-chart/organization
 import { QecTeam } from './pages/about/qec-team/qec-team';
 
 // Activities section
-import { Activities } from './pages/activities/activities';
 import { Academic } from './pages/activities/academic/academic';
 import { Conferences } from './pages/activities/conferences/conferences';
 import { FunFair } from './pages/activities/fun-fair/fun-fair';
@@ -26,7 +25,6 @@ import { Registration } from './pages/admin/registration/registration';
 import { Admissions } from './pages/admissions/admissions';
 
 // Membership section
-import { Membership } from './pages/membership/membership';
 import { Societies } from './pages/membership/societies/societies';
 
 // News section
@@ -54,7 +52,6 @@ export const routes: Routes = [
   },
   {
     path: 'activities',
-    component: Activities,
     children: [
       { path: 'academic', component: Academic },
       { path: 'conferences', component: Conferences },
@@ -75,7 +72,6 @@ export const routes: Routes = [
   },
   {
     path: 'membership',
-    component: Membership,
     children: [{ path: 'societies', component: Societies }],
   },
   {
